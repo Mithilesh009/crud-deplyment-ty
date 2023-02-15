@@ -3,6 +3,8 @@ const app= express();
 const bodyParser = require('body-parser')
 const mysql = require('mysql2') 
 const cors = require("cors")
+const port = process.env.port
+const path = require('path')
 
 // const mysql = require('mysql2');
 
@@ -101,7 +103,13 @@ app.delete('/deleteAll',(req,res)=>{
 })
 
 
-app.listen(3001 , ()=>{
+app.use(express.static(path.join(__dirname, './client/build')))
+
+app.get('*' , (req,res)=>{
+    res.sendFile(path.join(__dirname , './client/build/index.html'))
+});
+
+app.listen(port , ()=>{
     console.log("Server is runing on port 3000")
 })
 
